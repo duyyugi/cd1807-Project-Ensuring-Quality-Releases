@@ -10,7 +10,16 @@ variable "resource_group" {}
 variable "application_type" {}
 
 # Network
-variable virtual_network_name {}
-variable address_prefix_test {}
-variable address_space {}
+variable "virtual_network_name" {}
+variable "address_prefix_test" {}
+variable "address_space" {}
 
+#VM
+
+variable "admin_username" {
+  default = "Ausername"
+}
+
+variable "admin_password" {
+  default = "123456duyyugi"
+}
