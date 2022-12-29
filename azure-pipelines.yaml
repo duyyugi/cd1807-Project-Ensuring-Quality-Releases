@@ -256,7 +256,7 @@ stages:
                 - task: Bash@3
                   displayName: "Run UI Test"
                   inputs:
-                    workingDirectory: $(Pipeline.Workspace)/drop-performancetestsuit
+                    filePath: $(Pipeline.Workspace)/drop-performancetestsuit
                     script: |
                       sudo apt-get upgrade -y
                       sudo apt-get install python3-pip -y
