@@ -214,7 +214,7 @@ stages:
                 - task: CmdLine@2
                   displayName: "Install JMeter"
                   inputs:
-                    workingDirectory: $(System.DefaultWorkingDirectory)
+                    workingDirectory: $(Pipeline.Workspace)/drop-fakerestapi
                     script: |
                       sudo apt-get install openjdk-11-jre-headless -y
                       wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.4.tgz -O jmeter.tgz
@@ -225,16 +225,16 @@ stages:
                 - task: CmdLine@2
                   displayName: "Run Endurance Test"
                   inputs:
-                    workingDirectory: $(System.DefaultWorkingDirectory)/automatedtesting/jmeter
+                    workingDirectory: $(Pipeline.Workspace)/drop-fakerestapi
                     script: |
                       mkdir 
-                      apache-jmeter-5.4/bin/jmeter -n -t EnduranceTest.jmx -l jmeterlog/endurance_test_result.csv -e -o jmeterlog/endurance-test-html-report
+                      apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/EnduranceTest.jmx -l jmeterlog/jemeter/endurance_test_result.csv -e -o jmeterlog/endurance-test-html-report
                 - task: CmdLine@2
                   displayName: "Run Stress Test"
                   inputs:
-                    workingDirectory: $(System.DefaultWorkingDirectory)/automatedtesting/jmeter
+                    workingDirectory: $(Pipeline.Workspace)/drop-fakerestapi
                     script: |
-                      apache-jmeter-5.4/bin/jmeter -n -t StressTest.jmx -l jmeterlog/stress_test_result.csv -e -o jmeterlog/stress-test-html-report
+                      apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/StressTest.jmx -l jmeterlog/stress_test_result.csv -e -o jmeterlog/stress-test-html-report
   #     #--------------------------------------------#
   #     # Selenium | Functional UI Tests
   #     # ToDo:
