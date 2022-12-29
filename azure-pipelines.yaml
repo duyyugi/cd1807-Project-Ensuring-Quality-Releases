@@ -235,7 +235,7 @@ stages:
                     workingDirectory: $(Pipeline.Workspace)/drop-performancetestsuit
                     ## clear test to run next time
                     script: |
-                      apache-jmeter-5.4/bin/jmeter -n -t StressTest.jmx -l jmeterlog/stress_test_result.csv -e -o jmeterlog/stress-test-html-report \
+                      apache-jmeter-5.4/bin/jmeter -n -t StressTest.jmx -l jmeterlog/stress_test_result.csv -e -o jmeterlog/stress-test-html-report
                       rm -r jmeterlog
 
   #     #--------------------------------------------#
