@@ -214,10 +214,14 @@ stages:
                 - task: CmdLine@2
                   displayName: "Install JMeter"
                   inputs:
+                    workingDirectory: $(Pipeline.Workspace)/drop-fakerestapi
                     script: |
                       sudo apt-get install openjdk-11-jre-headless -y
                       wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.4.tgz -O jmeter.tgz
                       tar xzvf jmeter.tgz
+                      mkdir -p jmeterlog
+                      pwd
+                      ls -la
                 - task: CmdLine@2
                   displayName: "Run Endurance Test"
                   inputs:
