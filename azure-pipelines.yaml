@@ -201,7 +201,7 @@ stages:
             deploy:
               steps:
                 - task: AzureWebApp@1
-                  displayName: "Deploy Azure Web App"
+                  displayName: "Deploy a Azure Web App"
                   inputs:
                     azureSubscription: "$(azureServiceConnectionDeploymentId)"
                     appName: "p3UdacityDuyyugi-AppService"
