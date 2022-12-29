@@ -225,12 +225,14 @@ stages:
                 - task: CmdLine@2
                   displayName: "Run Endurance Test"
                   inputs:
+                    workingDirectory: $(Pipeline.Workspace)/drop-fakerestapi
                     script: |
                       mkdir 
                       apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/EnduranceTest.jmx -l jmeterlog/endurance_test_result.csv -e -o jmeterlog/endurance-test-html-report
                 - task: CmdLine@2
                   displayName: "Run Stress Test"
                   inputs:
+                    workingDirectory: $(Pipeline.Workspace)/drop-fakerestapi
                     script: |
                       apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/StressTest.jmx -l jmeterlog/stress_test_result.csv -e -o jmeterlog/stress-test-html-report
   #     #--------------------------------------------#
