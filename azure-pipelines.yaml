@@ -222,12 +222,13 @@ stages:
                   displayName: "Run Endurance Test"
                   inputs:
                     script: |
-                      apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/EnduranceTest.jmx -l log/jmeter/endurance_test_result.csv -e -o log/jmeter/endurance-test-html-report
+                      mkdir 
+                      apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/EnduranceTest.jmx -l jmeterlog/endurance_test_result.csv -e -o jmeterlog/endurance-test-html-report
                 - task: CmdLine@2
                   displayName: "Run Stress Test"
                   inputs:
                     script: |
-                      apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/StressTest.jmx -l log/jmeter/stress_test_result.csv -e -o log/jmeter/stress-test-html-report
+                      apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/StressTest.jmx -l jmeterlog/stress_test_result.csv -e -o jmeterlog/stress-test-html-report
   #     #--------------------------------------------#
   #     # Selenium | Functional UI Tests
   #     # ToDo:
