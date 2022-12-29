@@ -256,7 +256,8 @@ stages:
                 - task: Bash@3
                   displayName: "Run UI Test"
                   inputs:
-                    filePath: $(Pipeline.Workspace)/drop-uitests
+                    workingDirectory: $(Pipeline.Workspace)/drop-uitests
+                    targetType: "inline"
                     script: |
                       sudo apt-get upgrade -y
                       sudo apt-get install python3-pip -y
