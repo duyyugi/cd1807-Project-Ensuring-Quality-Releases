@@ -219,6 +219,8 @@ stages:
                       sudo apt-get install openjdk-11-jre-headless -y
                       wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.4.tgz -O jmeter.tgz
                       tar xzvf jmeter.tgz
+                      sudo apt-get install unzip
+                      unzip "$(Build.BuildId)-performancetestsuit.zip"
                       mkdir -p jmeterlog
                       pwd
                       ls -la
