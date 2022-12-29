@@ -17,7 +17,7 @@ variable "address_space" {}
 #VM
 
 variable "admin_username" {
-  default = "Ausername"
+  default = "ausername"
 }
 
 variable "admin_password" {
