@@ -6,7 +6,7 @@ tenant_id       = "c14fe3af-3fe7-4df9-8e01-e3f97147bb4c"
 
 # Resource Group/Location
 location            = "southeastasia"
-resource_group_name = "Azuredevops"
+resource_group_name = "P3Udacity"
 application_type    = "p3UdacityDuyyugi"
 
 # Network
