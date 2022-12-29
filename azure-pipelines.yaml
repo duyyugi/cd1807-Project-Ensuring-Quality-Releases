@@ -219,15 +219,15 @@ stages:
                       wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.4.tgz -O jmeter.tgz
                       tar xzvf jmeter.tgz
                 - task: CmdLine@2
-                  displayName: "Run Endurnace Test"
+                  displayName: "Run Endurance Test"
                   inputs:
                     script: |
-                      apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/EnduranceTest.jmx -l automatedtesting/jmeter/result/EnduranceTest/result.csv -e -o result/EnduranceTest/htmlReport
+                      apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/EnduranceTest.jmx -l log/jmeter/endurance_test_result.csv -e -o log/jmeter/endurance-test-html-report
                 - task: CmdLine@2
-                  displayName: "Run Stressed Test"
+                  displayName: "Run Stress Test"
                   inputs:
                     script: |
-                      apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/StressTest.jmx -l automatedtesting/jmeter/result/StressTest/result.csv -e -o result/StressTest/htmlReport
+                      apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/StressTest.jmx -l log/jmeter/stress_test_result.csv -e -o log/jmeter/stress-test-html-report
   #     #--------------------------------------------#
   #     # Selenium | Functional UI Tests
   #     # ToDo:
