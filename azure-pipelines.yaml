@@ -220,7 +220,7 @@ stages:
                       wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.4.tgz -O jmeter.tgz
                       tar xzvf jmeter.tgz
                       sudo apt-get install unzip
-                      unzip "$(Build.BuildId)-performancetestsuit.zip"
+                      unzip -o "$(Build.BuildId)-performancetestsuit.zip"
                       mkdir -p jmeterlog
                       pwd
                       ls -la
@@ -228,12 +228,16 @@ stages:
                   displayName: "Run Endurance Test"
                   inputs:
                     workingDirectory: $(Pipeline.Workspace)/drop-performancetestsuit
-                    script: apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/EnduranceTest.jmx -l jmeterlog/jemeter/endurance_test_result.csv -e -o jmeterlog/endurance-test-html-report
+                    script: apache-jmeter-5.4/bin/jmeter -n -t EnduranceTest.jmx -l jmeterlog/endurance_test_result.csv -e -o jmeterlog/endurance-test-html-report
                 - task: CmdLine@2
                   displayName: "Run Stress Test"
                   inputs:
                     workingDirectory: $(Pipeline.Workspace)/drop-performancetestsuit
-                    script: apache-jmeter-5.4/bin/jmeter -n -t automatedtesting/jmeter/StressTest.jmx -l jmeterlog/stress_test_result.csv -e -o jmeterlog/stress-test-html-report
+                    ## clear test to run next time
+                    script: |
+                      apache-jmeter-5.4/bin/jmeter -n -t StressTest.jmx -l jmeterlog/stress_test_result.csv -e -o jmeterlog/stress-test-html-report \
+                      rm -r jmeterlog
+
   #     #--------------------------------------------#
   #     # Selenium | Functional UI Tests
   #     # ToDo:
