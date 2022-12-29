@@ -255,22 +255,15 @@ stages:
 
                 - task: Bash@3
                   inputs:
-                    targetType: "inline"
+                    workingDirectory: $(Pipeline.Workspace)/drop-uitests
                     script: |
-                      ! /bin/bash
                       sudo apt-get upgrade -y
                       sudo apt-get install python3-pip -y
                       sudo apt-get install unzip -y
                       sudo apt-get install -y chromium-browser
+                      chromium-browser -version
                       sudo apt-get install -y chromium-chromedriver
+                      chromedriver --version
                       pip3 install -U selenium
-                      wget https://chromedriver.storage.googleapis.com/100.0.4896.20/chromedriver_linux64.zip
-                      unzip chromedriver_linux64.zip
-                      rm -r chromedriver_linux.zip
-                      sudo mkdir -p /var/logs/seleniumlogfile.txt
-                      sudo chmod 774 /var/logs/seleniumlogfile.txt
-                      sudo python3 -u $(Pipeline.Workspace)/selenium-python-file/login.py 2>&1 | sudo tee -a /var/logs/seleniumlogfile.txt
-                      cd $(System.DefaultWorkingDirectory)
-                      mkdir -p logs/selenium
-                      pwd
-                      cat seleniumlog.txt
+                      unzip -o "$(Build.BuildId)-uitests.zip"
+                      sudo python3 login.py
