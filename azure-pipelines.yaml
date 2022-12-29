@@ -253,6 +253,6 @@ stages:
                 - download: current
                   artifact: drop-uitests
 
-                - task: Bash@3
-                  inputs:
-                    script: |
+                # - task: Bash@3
+                #   inputs:
+                #     script: |
