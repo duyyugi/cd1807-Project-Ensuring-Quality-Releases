@@ -256,15 +256,15 @@ stages:
                 - task: Bash@3
                   displayName: "Run UI Test"
                   inputs:
-                    workingDirectory: $(Pipeline.Workspace)/drop-uitests
+                    workingDirectory: $(Pipeline.Workspace)/drop-performancetestsuit
                     script: |
-                      # sudo apt-get upgrade -y
-                      # sudo apt-get install python3-pip -y
-                      # sudo apt-get install unzip -y
-                      # sudo apt-get install -y chromium-browser
-                      # chromium-browser -version
-                      # sudo apt-get install -y chromium-chromedriver
-                      # chromedriver --version
-                      # pip3 install -U selenium
-                      # unzip -o "$(Build.BuildId)-uitests.zip"
-                      # sudo python3 login.py
+                      sudo apt-get upgrade -y
+                      sudo apt-get install python3-pip -y
+                      sudo apt-get install unzip -y
+                      sudo apt-get install -y chromium-browser
+                      chromium-browser -version
+                      sudo apt-get install -y chromium-chromedriver
+                      chromedriver --version
+                      pip3 install -U selenium
+                      unzip -o "$(Build.BuildId)-uitests.zip"
+                      sudo python3 login.py
