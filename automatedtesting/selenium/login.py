@@ -1,72 +1,47 @@
+# #!/usr/bin/env python
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options as ChromeOptions
-import datetime
-import syslog
+from selenium.webdriver.common.by import By
 
-def timestamp():
-    ts = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    return (ts + '\t')
-    
-# Using syslog --> log to Log Analytics
+
 # Start the browser and login with standard_user
-def login(user, password):
-    
-    # Login page.
-    syslog.syslog('Starting the browser...')
+def login (user, password):
+    print ('Starting the browser...')
+    # --uncomment when running in Azure DevOps.
     options = ChromeOptions()
-    options.add_argument('--no-sandbox')
     options.add_argument("--headless") 
-    options.add_argument("--remote-debugging-port=9230")
     driver = webdriver.Chrome(options=options)
-    syslog.syslog('Browser started successfully. Navigating to the demo page to login.')
+    driver = webdriver.Chrome()
+    print ('Browser started successfully. Navigating to the demo page to login.')
     driver.get('https://www.saucedemo.com/')
-    
-    # Using CCS_Seletor login to the website.
-    driver.find_element(By.CSS_SELECTOR, "input[id='user-name']").send_keys(user)
-    driver.find_element(By.CSS_SELECTOR, "input[id='password']").send_keys(password)
+
+    homepage_url = 'https://www.saucedemo.com/inventory.html'
+
+    driver.find_element(By.ID, "user-name").send_keys(user)
+    driver.find_element(By.ID, "password").send_keys(password)
     driver.find_element(By.ID, "login-button").click()
-    product_label = driver.find_element(By.CSS_SELECTOR, "div[class='inventory_item_name']").text
-    assert "Sauce Labs Backpack" in product_label
-    
+
+    assert driver.current_url == homepage_url
+    print ('user ' + user + ' login test successfully')
+
     return driver
 
-# Add item to Cart
-def add_cart(driver, n_items):
-    for i in range(n_items):
-        element = "a[id='item_" + str(i) + "_title_link']"  
-        driver.find_element(By.CSS_SELECTOR, element).click()  
-        driver.find_element(By.CSS_SELECTOR,"button.btn_primary.btn_inventory").click()  
-        product = driver.find_element(By.CSS_SELECTOR,"div[class='inventory_details_name large_size']").text  
-        print(timestamp() + product + " is added to the shopping cart.")  
-        driver.find_element(By.CSS_SELECTOR,"button.inventory_details_back_button").click()
+def add_and_remove_items_to_cart(driver):
+    items = driver.find_elements(By.CLASS_NAME,"inventory_item_name")
+    add_button_lists = driver.find_elements(By.CLASS_NAME, "btn_primary btn_inventory")
+    add_button_lists = driver.find_elements(By.CLASS_NAME, "btn_secondary btn_inventory")
+    for item in items:
+        print (item.text + "is added to cart")
+    for button in add_button_lists:
+        button.click()
+    for item in items:
+        print (item.text + "is removed from cart")
+    for button in add_button_lists:
+        button.click()
+    
+    print ('add and remove test successfully')
 
-    syslog.syslog('{:d} items are all added to the shopping cart successfully.'.format(n_items))
+driver = login('standard_user', 'secret_sauce')
 
-# Delete item from Cart
-def delete_cart(driver, n_items):
-    for i in range(n_items):
-        element = "a[id='item_" + str(i) + "_title_link']"
-        driver.find_element(By.CSS_SELECTOR,element).click()
-        driver.find_element(By.CSS_SELECTOR,"button.btn_secondary.btn_inventory").click()
-        product = driver.find_element(By.CSS_SELECTOR,"div[class='inventory_details_name large_size']").text
-        print(timestamp() + product + " is deleted from the shopping cart.")
-        driver.find_element(By.CSS_SELECTOR,"button.inventory_details_back_button").click()
-    syslog.syslog('{:d} items are deleted from the shopping cart successfully.'.format(n_items))
+add_and_remove_items_to_cart(driver)
 
-
-if __name__ == "__main__":
-    N_ITEMS = 6
-    TEST_USERNAME = 'standard_user'
-    TEST_PASSWORD = 'secret_sauce'
-    driver = login(TEST_USERNAME, TEST_PASSWORD)
-    add_cart(driver, N_ITEMS)
-    syslog.syslog('Add item done!')
-
-    delete_cart(driver, N_ITEMS)
-    syslog.syslog('Delete item done!')
-
-    driver.stop_client()
-    driver.close()
-    driver.quit()
-    syslog.syslog('Clean the client done!')
