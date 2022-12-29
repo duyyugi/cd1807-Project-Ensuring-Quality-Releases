@@ -151,20 +151,20 @@ stages:
           #   displayName: "Upload Package"
           #   artifact: drop-uitests
 
-          # #--------------------------------------------#
-          # # FakeRestAPI - Archive
-          # # ToDo: Complete the ArchiveFiles@2 task and publish step
-          # - task: ArchiveFiles@2
-          #   displayName: "Archive FakeRestAPI"
-          #   inputs:
-          #     rootFolderOrFile:
-          #     includeRootFolder:
-          #     archiveType:
-          #     archiveFile:
-          # # FakeRestAPI - Publish
-          # - publish:
-          #   displayName:
-          #   artifact:
+          #--------------------------------------------#
+          # FakeRestAPI - Archive
+          # ToDo: Complete the ArchiveFiles@2 task and publish step
+          - task: ArchiveFiles@2
+            displayName: "Archive FakeRestAPI"
+            inputs:
+              rootFolderOrFile: "automatedtesting/jmeter/fakerestapi"
+              includeRootFolder: false
+              archiveType: "zip"
+              archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip"
+          # FakeRestAPI - Publish
+          - publish: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip"
+            displayName: "publish fakerestapi"
+            artifact: drop-fakerestapi
 
           # #--------------------------------------------#
           # # JMeter (Performance) Test Suite - Archive
