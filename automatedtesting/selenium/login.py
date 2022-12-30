@@ -26,6 +26,7 @@ def login (user, password):
 
     assert driver.current_url == homepage_url
     print ('user ' + user + ' login test successfully')
+    syslog.syslog('user ' + user + ' login test successfully')
 
     return driver
 
@@ -35,14 +36,17 @@ def add_and_remove_items_to_cart(driver):
     add_button_lists = driver.find_elements(By.CLASS_NAME, "btn_secondary btn_inventory")
     for item in items:
         print (item.text + "is added to cart")
+        syslog.syslog('user ' + user + ' login test successfully')
     for button in add_button_lists:
         button.click()
     for item in items:
         print (item.text + "is removed from cart")
+        syslog.syslog(item.text + "is removed from cart")
     for button in add_button_lists:
         button.click()
     
     print ('add and remove test successfully')
+    syslog.syslog('add and remove test successfully')
 
 driver = login('standard_user', 'secret_sauce')
 
