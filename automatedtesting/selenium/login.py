@@ -2,6 +2,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.common.by import By
+import syslog
 
 
 # Start the browser and login with standard_user
@@ -14,6 +15,7 @@ def login (user, password):
     options.add_argument('--disable-dev-shm-usage')
     driver = webdriver.Chrome(options=options)
     print ('Browser started successfully. Navigating to the demo page to login.')
+    syslog.syslog('Browser started successfully. Navigating to the demo page to login.')
     driver.get('https://www.saucedemo.com/')
 
     homepage_url = 'https://www.saucedemo.com/inventory.html'
