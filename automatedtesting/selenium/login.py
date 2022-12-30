@@ -36,7 +36,7 @@ def add_and_remove_items_to_cart(driver):
     add_button_lists = driver.find_elements(By.CLASS_NAME, "btn_secondary btn_inventory")
     for item in items:
         print (item.text + "is added to cart")
-        syslog.syslog('user ' + user + ' login test successfully')
+        syslog.syslog(item.text + ' login test successfully')
     for button in add_button_lists:
         button.click()
     for item in items:
