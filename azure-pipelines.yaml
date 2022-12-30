@@ -275,4 +275,12 @@ stages:
                       sh onboard_agent.sh -w ${AZURE_LOG_ANALYTICS_ID} -s ${AZURE_LOG_ANALYTICS_PRIMARY_KEY}
                       sudo /opt/microsoft/omsagent/bin/service_control restart ${AZURE_LOG_ANALYTICS_ID}
                       unzip -o "$(Build.BuildId)-uitests.zip"
-                      sudo python3 login.py
+                      sudo mkdir -p /var/log/selenium
+                      sudo chmod 664 /var/log/selenium
+                      sudo python3 login.py | sudo tee -a /var/log/selenium/selenium-test.log
+                      # copy selenium log file to $(System.DefaultWorkingDirectory)/log/selenium/
+                      cd $(System.DefaultWorkingDirectory)
+                      mkdir -p log/selenium
+                      pwd
+                      sudo cp /var/log/selenium/selenium-test.log log/selenium/selenium-test.log
+                      ls -la
