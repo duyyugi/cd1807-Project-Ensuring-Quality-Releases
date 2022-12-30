@@ -19,6 +19,9 @@ variables:
   projectRoot: $(System.DefaultWorkingDirectory)
   # Environment name
   environmentName: "test"
+  # Log agent
+  AZURE_LOG_ANALYTICS_ID: "38207d47-485a-4da7-9220-1f718afc9d68"
+  AZURE_LOG_ANALYTICS_PRIMARY_KEY: "+SGxNJWAyXyIsJ9xJvcELrSYfn5+qlTg6Ht4t+949gFpCY9NMzGOoPQQGHLuDTVmebjq+1Uyk19DnJWyHasoxw=="
 
 stages:
   #--------------------------------------------#
@@ -267,5 +270,9 @@ stages:
                       sudo apt-get install -y chromium-chromedriver
                       chromedriver --version
                       pip3 install -U selenium
+                      # Install Log Analytics agent on Linux computers (only need to run once)
+                      wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh
+                      sh onboard_agent.sh -w ${AZURE_LOG_ANALYTICS_ID} -s ${AZURE_LOG_ANALYTICS_PRIMARY_KEY}
+                      sudo /opt/microsoft/omsagent/bin/service_control restart ${AZURE_LOG_ANALYTICS_ID}
                       unzip -o "$(Build.BuildId)-uitests.zip"
                       sudo python3 login.py
